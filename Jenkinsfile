@@ -4,6 +4,8 @@ pipeline {
     environment {
         TF_VERSION = "1.5.7"  // Replace with your desired Terraform version
         TF_WORKSPACE = "default"
+        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials ('AWS_SECRET_ACCESS_KEY')
        // REPO_NAME = "${params.REPO_NAME}"
     }
 
@@ -17,6 +19,7 @@ pipeline {
 
     /*    stage('Install Terraform') {
             steps {
+                
                 // Install Terraform using a package manager or manually download it
                 sh '''
                     if ! terraform -v | grep ${TF_VERSION}; then
