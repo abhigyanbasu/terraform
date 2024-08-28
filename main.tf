@@ -14,38 +14,11 @@ variable "ecr_repo_name" {
 resource "aws_ecr_repository" "this" {
   name                 = var.ecr_repo_name
   image_tag_mutability = "MUTABLE"  # Options: MUTABLE, IMMUTABLE
+}
 
-  image_scanning_configuration {
-    scan_on_push = true
-  }
 
-  # Optional: encryption configuration
-  encryption_configuration {
-    encryption_type = "AES256"  # Default encryption, can be changed to KMS
-  }
+
   
-  # Optional: lifecycle policy
-  lifecycle_policy {
-    policy = <<EOF
-{
-  "rules": [
-    {
-      "rulePriority": 1,
-      "description": "Keep only the last 10 images",
-      "selection": {
-        "tagStatus": "any",
-        "countType": "imageCountMoreThan",
-        "countNumber": 10
-      },
-      "action": {
-        "type": "expire"
-      }
-    }
-  ]
-}
-EOF
-  }
-}
 
 # Output the repository URL
 output "ecr_repository_url" {
