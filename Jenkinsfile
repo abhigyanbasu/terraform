@@ -39,9 +39,11 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
+                script {
                 // Generate and display an execution plan
                 def REPO_NAME = "${params.REPO_NAME}"
                 sh 'terraform plan -var="ecr_repo_name=$REPO_NAME" -out=tfplan'
+                }
             }
         }
 
