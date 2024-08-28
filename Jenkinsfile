@@ -4,7 +4,7 @@ pipeline {
     environment {
         TF_VERSION = "1.5.7"  // Replace with your desired Terraform version
         TF_WORKSPACE = "default"
-        REPO_NAME = "${params.REPO_NAME}"
+       // REPO_NAME = "${params.REPO_NAME}"
     }
 
     stages {
@@ -40,7 +40,8 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 // Generate and display an execution plan
-                sh 'terraform plan -var $REPO_NAME -out=tfplan'
+                def REPO_NAME = "${params.REPO_NAME}"
+                sh 'terraform plan -var="ecr_repo_name=$REPO_NAME" -out=tfplan'
             }
         }
 
