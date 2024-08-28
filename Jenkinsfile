@@ -4,17 +4,18 @@ pipeline {
     environment {
         TF_VERSION = "1.5.7"  // Replace with your desired Terraform version
         TF_WORKSPACE = "default"
+        REPO_NAME = "${params.REPO_NAME}"
     }
 
     stages {
         stage('Checkout') {
             steps {
                 // Checkout the code from the repository
-                git branch: 'main', url: 'https://github.com/your-repo/terraform-project.git'
+                git branch: 'main', url: 'https://github.com/abhigyanbasu/terraform.git'
             }
         }
 
-        stage('Install Terraform') {
+    /*    stage('Install Terraform') {
             steps {
                 // Install Terraform using a package manager or manually download it
                 sh '''
@@ -27,7 +28,7 @@ pipeline {
                     terraform -v
                 '''
             }
-        }
+        }*/
 
         stage('Terraform Init') {
             steps {
@@ -39,7 +40,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 // Generate and display an execution plan
-                sh 'terraform plan -out=tfplan'
+                sh 'terraform plan -var $REPO_NAME -out=tfplan'
             }
         }
 
